@@ -135,20 +135,20 @@ class FrameTVCoordinator(DataUpdateCoordinator[FrameTVState]):
         """Attempt to recover art mode."""
         now = time.time()
 
+        # Always set cooldown to avoid spamming on repeated failures
+        self.last_recovery_time = now
+
         if power_state == "on":
             _LOGGER.info("TV on but art mode off — recovering")
             success = await self.hass.async_add_executor_job(self.tv.set_art_mode, True)
             if success:
                 _LOGGER.info("Art mode recovery: SUCCESS")
-                self.last_recovery_time = now
             else:
                 _LOGGER.warning("Art mode recovery: FAILED")
 
         elif power_state == "standby":
             _LOGGER.info("TV in standby — waking to art mode")
-            success = await self.hass.async_add_executor_job(self.tv.wake_to_art_mode)
-            if success:
-                self.last_recovery_time = now
+            await self.hass.async_add_executor_job(self.tv.wake_to_art_mode)
 
     async def _cycle_art(self) -> None:
         """Cycle to next artwork."""

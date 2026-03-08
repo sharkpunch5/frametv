@@ -155,7 +155,7 @@ class FrameTVConnection:
             remote.send_key(key)
             return True
         except Exception as e:
-            _LOGGER.warning("send_key(%s) failed: %s", key, e)
+            _LOGGER.debug("send_key(%s) failed: %s", key, e)
             self._close_remote()
             return False
 
