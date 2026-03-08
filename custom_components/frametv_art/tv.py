@@ -47,16 +47,22 @@ class FrameTVConnection:
         """
         if self._token:
             return
+        # Check if library already saved a token file from a previous session
+        self._load_token()
+        if self._token:
+            return
         try:
             tv = SamsungTVWS(
                 host=self.host, port=DEFAULT_PORT, token_file=self.token_file, timeout=10
             )
             # send_key triggers the full connection flow including token exchange
-            tv.send_key("KEY_UNKNOWN")
-            self._load_token()
-            _LOGGER.info("Token obtained from TV")
+            tv.send_key("KEY_ENTER")
         except Exception as e:
             _LOGGER.debug("Token negotiation: %s", e)
+        # Token is saved by library during WebSocket handshake, even if send_key fails
+        self._load_token()
+        if self._token:
+            _LOGGER.info("Token obtained from TV")
 
     def get_power_state(self) -> str | None:
         """Get TV power state via REST API. Returns 'on', 'standby', or None."""
