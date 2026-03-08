@@ -1,0 +1,2 @@
+samsungtvws[async,art]>=3.0.0
+wakeonlan>=3.1.0

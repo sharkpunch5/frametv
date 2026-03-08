@@ -1,0 +1,13 @@
+DOMAIN = "frametv_art"
+
+CONF_TV_IP = "tv_ip"
+CONF_TOKEN_FILE = "token_file"
+CONF_POLL_INTERVAL = "poll_interval"
+CONF_RECOVERY_COOLDOWN = "recovery_cooldown"
+CONF_ART_CYCLE_MINUTES = "art_cycle_minutes"
+CONF_PRESENCE_ENTITY = "presence_entity"
+
+DEFAULT_POLL_INTERVAL = 10
+DEFAULT_RECOVERY_COOLDOWN = 30
+DEFAULT_ART_CYCLE_MINUTES = 5
+DEFAULT_PORT = 8002

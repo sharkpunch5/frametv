@@ -1,0 +1,32 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Samsung Frame TV Art Mode",
+        "description": "Configure your Samsung Frame TV for automatic art mode management.",
+        "data": {
+          "tv_ip": "TV IP Address",
+          "art_cycle_minutes": "Art cycle interval (minutes, 0 = disabled)",
+          "poll_interval": "Poll interval (seconds)",
+          "recovery_cooldown": "Recovery cooldown (seconds)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This TV is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Samsung Frame TV Art Mode Options",
+        "data": {
+          "art_cycle_minutes": "Art cycle interval (minutes, 0 = disabled)",
+          "poll_interval": "Poll interval (seconds)",
+          "recovery_cooldown": "Recovery cooldown (seconds)",
+          "presence_entity": "Presence sensor entity (optional)"
+        }
+      }
+    }
+  }
+}

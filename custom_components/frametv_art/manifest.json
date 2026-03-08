@@ -1,0 +1,12 @@
+{
+  "domain": "frametv_art",
+  "name": "Samsung Frame TV Art Mode",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/sharkpunch5/frametv",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/sharkpunch5/frametv/issues",
+  "requirements": ["samsungtvws[async,art]>=3.0.0"],
+  "version": "0.1.0"
+}
