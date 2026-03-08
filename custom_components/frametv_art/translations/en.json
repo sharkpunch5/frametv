@@ -12,6 +12,10 @@
         }
       }
     },
+    "error": {
+      "cannot_connect": "Could not connect to the TV. Make sure it is powered on and on the same network.",
+      "not_frame_tv": "This TV does not appear to be a Samsung Frame TV."
+    },
     "abort": {
       "already_configured": "This TV is already configured."
     }
