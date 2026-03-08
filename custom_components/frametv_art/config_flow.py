@@ -83,7 +83,7 @@ class FrameTVArtConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def async_get_options_flow(
         config_entry: config_entries.ConfigEntry,
     ) -> FrameTVArtOptionsFlow:
-        return FrameTVArtOptionsFlow(config_entry)
+        return FrameTVArtOptionsFlow()
 
 
 class FrameTVArtOptionsFlow(config_entries.OptionsFlow):
