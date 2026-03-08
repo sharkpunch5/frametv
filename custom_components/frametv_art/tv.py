@@ -25,6 +25,38 @@ class FrameTVConnection:
         self.token_file = token_file or os.path.join(
             os.path.expanduser("~"), ".frametv_token"
         )
+        self._token: str | None = None
+        self._load_token()
+
+    def _load_token(self) -> None:
+        """Load saved token from file."""
+        try:
+            if self.token_file and os.path.exists(self.token_file):
+                with open(self.token_file) as f:
+                    self._token = f.read().strip()
+                if self._token:
+                    _LOGGER.debug("Loaded token from %s", self.token_file)
+        except Exception:
+            pass
+
+    def ensure_token(self) -> None:
+        """Connect to remote endpoint to obtain/refresh token if needed.
+
+        The remote endpoint handles token negotiation (pairing popup).
+        The art endpoint does not, so we must get the token here first.
+        """
+        if self._token:
+            return
+        try:
+            tv = SamsungTVWS(
+                host=self.host, port=DEFAULT_PORT, token_file=self.token_file, timeout=10
+            )
+            # send_key triggers the full connection flow including token exchange
+            tv.send_key("KEY_UNKNOWN")
+            self._load_token()
+            _LOGGER.info("Token obtained from TV")
+        except Exception as e:
+            _LOGGER.debug("Token negotiation: %s", e)
 
     def get_power_state(self) -> str | None:
         """Get TV power state via REST API. Returns 'on', 'standby', or None."""
@@ -46,6 +78,7 @@ class FrameTVConnection:
 
     def get_art_mode(self) -> str | None:
         """Get art mode state. Returns 'on', 'off', or None."""
+        self.ensure_token()
         try:
             art = SamsungTVArt(
                 host=self.host, port=DEFAULT_PORT, token_file=self.token_file, timeout=3
@@ -58,6 +91,7 @@ class FrameTVConnection:
 
     def set_art_mode(self, on: bool) -> bool:
         """Set art mode. Returns True on success."""
+        self.ensure_token()
         try:
             art = SamsungTVArt(
                 host=self.host, port=DEFAULT_PORT, token_file=self.token_file, timeout=5
